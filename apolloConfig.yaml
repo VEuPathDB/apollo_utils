@@ -1,0 +1,6 @@
+#supply default Apollo connection details here
+base_url: https://apollo-api.your-server.org
+user: user123@some.host
+
+
+
