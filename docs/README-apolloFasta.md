@@ -20,9 +20,9 @@ if a sqlite file with the existing name is found this will be used instead of
 downloading the GFF file from source. Check stdout and the logfile for the 
 details of which source is being used.
 
-**Configuration
+** Configuration
 
-***Apollo
+*** Apollo
 
 Access to an Apollo server is configured via an apolloConfig.yaml file. This file
 contains entries for the base URL of the Apollo server and the user id that should
@@ -38,13 +38,13 @@ environment variable, e.g.
 
 `ApolloPass=SomeS3cretPazzW0rd`
 
-***Python
+*** Python
 
 All requirements are listed in requirements.txt
 
 `pip install requirements.txt`
 
-**Usage
+** Usage
 
 Obtain and install repo
 
