@@ -186,7 +186,7 @@ def main():
     parser.add_argument('--gff', help='output path of organism GFF file', required=True )
     parser.add_argument('--pep', help='output path of peptide file', required=True )
     parser.add_argument('--logfile', help='path for logfile output' , required=True )
-    parser.add_argument('--sqlite', help='path for existing gffutils sqlite db' , required=False )
+    parser.add_argument('--sqlite', help='path for gffutils sqlite db' , required=False )
     parser.add_argument('--config', help='path for yaml config file for Apollo connection details' , required=True )
 
     args = parser.parse_args()

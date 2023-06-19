@@ -14,9 +14,10 @@ no clash between the mRNA and peptide ids.
 
 The GFF file is read into an in memory SQLite database using [gffutils](https://daler.github.io/gffutils/)
 
-The GFF file can be saved to disk if desired (see usage) - if a file with the
-existing name is found this will be used instead of downloading the GFF file from
-source. Check stdout and the logfile for the details of which source is being used.
+The GFF file can be saved to disk if desired (see usage --sqlite option) - 
+if a sqlite file with the existing name is found this will be used instead of 
+downloading the GFF file from source. Check stdout and the logfile for the 
+details of which source is being used.
 
 **Configuration
 ***Apollo
@@ -39,15 +40,42 @@ All requirements are listed in requirements.txt
 
 `pip install requirements.txt`
 
-**Typical script usage
+**Usage
+Obtain and install repo
 
 ```
-python3 apolloFasta.py \
- --gff speciesX.gff \
- --logfile speciesX.log \
- --organism "speciesX" \
- --pep peptide.fa \
- --config apolloConfig.yaml
+git clone https://github.com/VEuPathDB/apollo_utils.git
+python3 -m venv ./apolloFasta
+. ./apolloFasta/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+```
+Update the apolloConfig.yaml file with the correct defaults for your server
+(see configuration section above)
+Set the ApolloPass env variable
+
+```
+ApolloPass=vi3r3
+export ApolloPass
+```
+
+Run code.
+
+```
+usage: apolloFasta.py [-h] --organism ORGANISM --gff GFF --pep PEP --logfile LOGFILE
+                      [--sqlite SQLITE] --config CONFIG
+
+Retrieve peptide fasta from VEuPath Apollo server for EBI patch build).
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --organism ORGANISM  Apollo organism to retrieve
+  --gff GFF            output path of organism GFF file
+  --pep PEP            output path of peptide file
+  --logfile LOGFILE    path for logfile output
+  --sqlite SQLITE      path for gffutils sqlite db
+  --config CONFIG      path for yaml config file for Apollo connection details
 ```
 
 * gff      - write the retrieved GFF3 file to disk
@@ -55,3 +83,35 @@ python3 apolloFasta.py \
 * organism - name in Apollo orgaism to retrieve
 * pep      - output fasta prpetide file
 * confif   - apollo webservice config file
+
+*** Example: GFF retrieval - in memory sqlite generated
+
+python3 apolloFasta.py \
+--gff culexq.gff \
+--logfile culexq.log \
+--organism "Culex quinquefasciatus JHB 2020 [Dec 04, 2020]" \
+--pep culexq_peptide.fa \
+--config apolloConfig.yaml
+
+*** Example: GFF retrieval - file based sqlite generated
+python3 apolloFasta.py \
+--gff culexq.gff \
+--logfile culexq.log \
+--organism "Culex quinquefasciatus JHB 2020 [Dec 04, 2020]" \
+--pep culexq_peptide.fa \
+--config apolloConfig.yaml 
+--sqlite ofcourse
+
+*** Example: reuse of existing sqlite database
+python3 apolloFasta.py \
+--gff culexq.gff \
+--logfile culexq.log \
+--organism "Culex quinquefasciatus JHB 2020 [Dec 04, 2020]" \
+--pep culexq_peptide.fa \
+--config apolloConfig.yaml 
+--sqlite ofcourse
+
+existing database detected - using that file ofcourse
+0 unedited genes detected
+476 mRNA identified with parent gene status=Finished
+
