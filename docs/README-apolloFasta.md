@@ -1,4 +1,4 @@
-README - apolloFasta.py
+* README - apolloFasta.py
 
 This script retrieves and formats peptide fasta sequences from an Apollo2 server.
 
@@ -21,7 +21,9 @@ downloading the GFF file from source. Check stdout and the logfile for the
 details of which source is being used.
 
 **Configuration
+
 ***Apollo
+
 Access to an Apollo server is configured via an apolloConfig.yaml file. This file
 contains entries for the base URL of the Apollo server and the user id that should
 be used for access.
@@ -37,11 +39,13 @@ environment variable, e.g.
 `ApolloPass=SomeS3cretPazzW0rd`
 
 ***Python
+
 All requirements are listed in requirements.txt
 
 `pip install requirements.txt`
 
 **Usage
+
 Obtain and install repo
 
 ```
