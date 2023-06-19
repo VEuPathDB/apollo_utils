@@ -1,4 +1,4 @@
-*README - apolloFasta.py
+* README - apolloFasta.py
 This script retrieves and formats peptide fasta sequences from an Apollo2 server.
 
 Data is retrieved via call to the [Apollo webservice API](http://demo.genomearchitect.io/Apollo2/jbrowse/web_services/api). Two API calls are used,
