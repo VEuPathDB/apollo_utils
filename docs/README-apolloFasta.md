@@ -1,4 +1,4 @@
-* README - apolloFasta.py
+# README - apolloFasta.py
 
 This script retrieves and formats peptide fasta sequences from an Apollo2 server.
 
@@ -20,9 +20,9 @@ if a sqlite file with the existing name is found this will be used instead of
 downloading the GFF file from source. Check stdout and the logfile for the 
 details of which source is being used.
 
-** Configuration
+## Configuration
 
-*** Apollo
+### Apollo
 
 Access to an Apollo server is configured via an apolloConfig.yaml file. This file
 contains entries for the base URL of the Apollo server and the user id that should
@@ -38,13 +38,13 @@ environment variable, e.g.
 
 `ApolloPass=SomeS3cretPazzW0rd`
 
-*** Python
+### Python
 
 All requirements are listed in requirements.txt
 
 `pip install requirements.txt`
 
-** Usage
+## Usage
 
 Obtain and install repo
 
@@ -89,16 +89,18 @@ optional arguments:
 * pep      - output fasta prpetide file
 * confif   - apollo webservice config file
 
-*** Example: GFF retrieval - in memory sqlite generated
-
+### Example: GFF retrieval - in memory sqlite generated
+```
 python3 apolloFasta.py \
 --gff culexq.gff \
 --logfile culexq.log \
 --organism "Culex quinquefasciatus JHB 2020 [Dec 04, 2020]" \
 --pep culexq_peptide.fa \
 --config apolloConfig.yaml
+```
 
-*** Example: GFF retrieval - file based sqlite generated
+### Example: GFF retrieval - file based sqlite generated
+```
 python3 apolloFasta.py \
 --gff culexq.gff \
 --logfile culexq.log \
@@ -106,8 +108,10 @@ python3 apolloFasta.py \
 --pep culexq_peptide.fa \
 --config apolloConfig.yaml 
 --sqlite ofcourse
+```
 
-*** Example: reuse of existing sqlite database
+### Example: reuse of existing sqlite database
+```
 python3 apolloFasta.py \
 --gff culexq.gff \
 --logfile culexq.log \
@@ -119,4 +123,4 @@ python3 apolloFasta.py \
 existing database detected - using that file ofcourse
 0 unedited genes detected
 476 mRNA identified with parent gene status=Finished
-
+```
