@@ -1,2 +1,4 @@
 # apollo_utils
-utility scripts for interacting with Apollo
+Utility scripts for interacting with Apollo.
+
+Red the relevant README for each script in the docs folder.
