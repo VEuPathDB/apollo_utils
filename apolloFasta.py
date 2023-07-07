@@ -134,8 +134,6 @@ def getPeptide( apollodb:str, mrna2cds:dict, apolloDefs:dict ) -> None :
         
     """
 
-#curl -X POST -H "Content-Type: application/json" --data '{"username":"api@local.host","password":"GFERsVNiX5BQ09uN", "organismString":"Culex quinquefasciatus JHB 2020 [Dec 04, 2020]", "sequenceName":"CM027411.1", "featureName":"5448bf02-c6b6-4ec6-9800-519cb2b64640", "type":"peptide"  }' https://apollo-api.veupathdb.org/sequence/sequenceByName
-
     errors =[]
 
     for k in mrna2cds.keys():
@@ -159,22 +157,29 @@ def getPeptide( apollodb:str, mrna2cds:dict, apolloDefs:dict ) -> None :
         try :
             r = requests.post( url, headers=header,  json=params )
 
-            logging.info( "successfully retrieved peptide sequence from Apollo for " +  ob.get('cds_id') )
-            ob.update({ 'peptide': r.text } )
+            if r.status_code == requests.codes.ok:
+
+                logging.info( "successfully retrieved peptide sequence from Apollo for " +  ob.get('cds_id') )
+                ob.update({ 'peptide': r.text } )
+            else:
+                logging.critical( "failed to retrieve peptide sequence from Apollo for " +  ob.get('cds_id') )
+                print( ob.get('cds_id') + " peptide sequence could not be retrieved - you will need to manually obtain this from Apollo")
+                ob.update({ 'peptide': None } )
+                errors.append( ob.get('cds_id') )
 
         except requests.HTTPError as e:
             msg = "failed to retrieve data from Apollo " + url  + e
-            errors.add( ob.get('mrna_id') )
+            errors.append( ob.get('mrna_id') )
             logging.critical(msg)
 
         except ConnectionError as con_e :
             msg = "connection error for Apollo " + url + con_e
-            errors.add( ob.get('mrna_id') )
+            errors.append( ob.get('mrna_id') )
             logging.critical(msg)
 
         except requests.Timeout as t_e :
             msg = "timeout for Apollo " + url + t_e
-            errors.add( ob.get('mrna_id') )
+            errors.apend( ob.get('mrna_id') )
             logging.critical(msg)
 
     return errors
@@ -231,8 +236,9 @@ def main():
 
         for k in mrna2cds.keys():
             o = mrna2cds.get(k)
-            fh.write( ">" + o.get('cds_id') + " | " + o.get('name') +  "\n" )
-            fh.write( o.get('peptide') + "\n" )
+            if o.get('peptide'):
+                fh.write( ">" + o.get('cds_id') + " | " + o.get('name') +  "\n" )
+                fh.write( o.get('peptide') + "\n" )
     fh.close()
 
     logging.info('stop')
