@@ -20,6 +20,12 @@ if a sqlite file with the existing name is found this will be used instead of
 downloading the GFF file from source. Check stdout and the logfile for the 
 details of which source is being used.
 
+Corrupt Apollo objects can remain the database preventing sequence retrieval.
+If a peptide sequence cannot be retrieved then an error message will be logged
+to both STDOUT and the log file, and no entry will be written to the fasta file
+for the corresponding CDS id (any entries will need to be manually retrieved
+from Apollo using the GUI). See the examples section for a typical report.
+
 ## Configuration
 
 ### Apollo
@@ -106,7 +112,7 @@ python3 apolloFasta.py \
 --logfile culexq.log \
 --organism "Culex quinquefasciatus JHB 2020 [Dec 04, 2020]" \
 --pep culexq_peptide.fa \
---config apolloConfig.yaml 
+--config apolloConfig.yaml \
 --sqlite ofcourse
 ```
 
@@ -117,10 +123,27 @@ python3 apolloFasta.py \
 --logfile culexq.log \
 --organism "Culex quinquefasciatus JHB 2020 [Dec 04, 2020]" \
 --pep culexq_peptide.fa \
---config apolloConfig.yaml 
+--config apolloConfig.yaml \
 --sqlite ofcourse
 
 existing database detected - using that file ofcourse
 0 unedited genes detected
 476 mRNA identified with parent gene status=Finished
+```
+
+### Example: reporting of failed fasta sequence retrieval from Apollo
+```
+python3 apolloFasta.py \
+--gff culexq.gff \
+--logfile culexq.log \
+--organism "Culex quinquefasciatus JHB 2020 [Dec 04, 2020]" \
+--pep culexq_peptide.fa \
+--config apolloConfig.yaml 
+
+no existing database found - downloading GFF from Apollo and building db
+0 unedited genes detected
+454 mRNA identified with parent gene status=Finished
+f42dd3ec-cf69-4676-839c-9579387db78d peptide sequence could not be retrieved - you will need to manually obtain this from Apollo
+3cf359b3-4fb8-4256-b0a9-28487b5cfea0 peptide sequence could not be retrieved - you will need to manually obtain this from Apollo
+2 errors encountered in peptide fasta retrieval - see logfile
 ```
